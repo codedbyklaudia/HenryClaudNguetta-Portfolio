@@ -1,0 +1,101 @@
+@use './variables' as *;
+
+// Layout
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+@mixin absolute {
+  position: absolute;
+}
+@mixin relative {
+  position: relative;
+}
+
+//  Typography 
+@mixin nav-link-style {
+  font-family: $font-secondary;
+  font-size: $font-size-nav;
+  letter-spacing: $letter-spacing-nav;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 400;
+  transition: color $transition-fast, opacity $transition-fast;
+}
+
+@mixin logo-style {
+  font-family: $font-logo;
+  font-size: 1.6rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+// Theme 
+@mixin light-theme {
+  --bg:           #{$color-bg-light};
+  --text:         #{$color-text-light};
+  --text-muted:   #{$color-text-muted};
+  --nav-border:   rgba(0, 0, 0, 0.08);
+}
+
+@mixin dark-theme {
+  --bg:           #{$color-bg-dark};
+  --text:         #{$color-text-dark};
+  --text-muted:   #888884;
+  --nav-border:   rgba(255, 255, 255, 0.08);
+}
+
+// Sun
+@mixin sun-ray($width, $height, $top, $left, $rotate) {
+  position: absolute;
+  width: $width;
+  height: $height;
+  background: $color-sun-ray;
+  border-radius: 99px;
+  top: $top;
+  left: $left;
+  transform: rotate($rotate);
+  transform-origin: bottom center;
+}
+
+// Responsive 
+@mixin mobile {
+  @media (max-width: 640px) { @content; }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) { @content; }
+}
+
+// Effects
+@mixin hover-lift {
+  transition: transform $transition-base;
+  &:hover { transform: translateY(-2px); }
+}
+
+@mixin subtle-underline {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width $transition-base;
+  }
+  &:hover::after { width: 100%; }
+}

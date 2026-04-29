@@ -1,0 +1,43 @@
+// Colours
+$color-bg-light:        #eaeaea;
+$color-bg-dark:         #141414;
+$color-text-light:      #141414;
+$color-text-dark:       #eaeaea;
+$color-text-muted:      #6b6b68;
+
+$color-accent:          #f5c131;
+$color-accent-hover:    #e8a820;
+
+$white: #ffffff;
+
+// Typography
+$font-primary:          'Times New Roman', serif;
+$font-secondary:        'Caveat', cursive;
+
+$font-size-nav:         0.85rem;
+$font-size-base:        1rem;
+$font-size-sm:          0.75rem;
+$font-size-md:          1.1rem;
+$letter-spacing-nav:    0.12em;
+
+// Spacing
+$spacing-xs:            0.25rem;
+$spacing-sm:            0.5rem;
+$spacing-md:            1rem;
+$spacing-lg:            2rem;
+$spacing-xl:            4rem;
+
+// Navbar
+$navbar-height:         72px;
+$navbar-sun-size:       140px;
+$navbar-sun-overlap:    50px;
+
+// Transitions
+$transition-fast:       0.15s ease;
+$transition-base:       0.3s ease;
+$transition-slow:       0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Z-index
+$z-navbar:              100;
+$z-sun:                 99;
+

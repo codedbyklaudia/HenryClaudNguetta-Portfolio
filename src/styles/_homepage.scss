@@ -1,0 +1,396 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+.home {
+  width: 100%;
+  background: $color-bg-dark;
+  color: $color-text-dark;
+}
+
+// Hero
+.hero {
+  @include relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+
+  &__video-wrap {
+    @include absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__video {
+    border: none;
+    @include absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 177.78vh;
+    min-width: 100%;
+    height: 56.25vw;
+    min-height: 100%;
+  }
+
+  &__overlay {
+    @include absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  &__center {
+    @include absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include flex-col;
+    align-items: center;
+    gap: $spacing-md;
+    text-align: center;
+    z-index: 2;
+    width: 100%;
+    padding: 0 $spacing-md;
+  }
+
+  &__name {
+    font-family: $font-secondary;
+    font-size: 4rem !important;
+    font-weight: 400;
+    color: $color-text-dark;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+    line-height: 1.1;
+  }
+
+  &__subtitle {
+    font-family: $font-primary;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  &__play {
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: $color-text-dark;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    letter-spacing: $letter-spacing-nav;
+    text-transform: uppercase;
+    padding: $spacing-sm $spacing-lg;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    transition: background $transition-fast, border-color $transition-fast;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+    text-decoration: none;
+    margin-top: $spacing-xl;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.7);
+      border-color: rgba(255, 255, 255, 0.9);
+    }
+
+    @include mobile {
+      font-size: 0.7rem;
+      padding: $spacing-sm $spacing-md;
+    }
+  }
+
+  // Mouse + scroll label stacked, sitting above the name
+  &__scroll {
+    @include absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    @include flex-col;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.5);
+    z-index: 2;
+
+    span {
+      font-family: $font-secondary;
+      font-size: 0.6rem;
+      letter-spacing: $letter-spacing-nav;
+      text-transform: uppercase;
+    }
+  }
+
+  &__mouse {
+    width: 34px;
+    height: 54px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  &__mouse-wheel {
+    width: 4px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
+    animation: scroll-wheel 1.8s ease infinite;
+  }
+
+  &__chevrons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  &__chevron {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+    transform: rotate(45deg);
+    opacity: 0;
+    animation: chevron-seq 1.6s ease-in-out infinite;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.4s; }
+  }
+
+  // Name sits at very bottom, below the scroll indicator
+  &__title-wrap {
+    @include absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: $spacing-md;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 100%);
+    z-index: 2;
+  }
+
+  &__name {
+    font-family: $font-secondary;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    color: $color-text-dark;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@keyframes chevron-seq {
+  0%   { opacity: 0; transform: rotate(45deg) translate(0, 0); }
+  30%  { opacity: 1; transform: rotate(45deg) translate(3px, 3px); }
+  60%  { opacity: 0; transform: rotate(45deg) translate(6px, 6px); }
+  100% { opacity: 0; transform: rotate(45deg) translate(6px, 6px); }
+}
+
+@keyframes scroll-wheel {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(8px); opacity: 0; }
+}
+
+// Gallery
+.gallery-section {
+  width: 100%;
+  background: $color-bg-dark;
+  padding: $spacing-xl $spacing-lg;
+
+  @include mobile {
+    padding: $spacing-lg $spacing-md;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 95%;
+    margin: 0 auto;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #1a1a18;
+    position: relative;
+    cursor: pointer;
+
+    &:hover .gallery-section__poster {
+      opacity: 0;
+    }
+
+    &:hover .gallery-section__video {
+      opacity: 1;
+    }
+  }
+
+  &__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity $transition-base;
+    filter: brightness(0.85);
+  }
+
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity $transition-base;
+  }
+}
+
+// CTA
+.cta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-xl $spacing-lg;
+
+  &__more {
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    letter-spacing: $letter-spacing-nav;
+    text-transform: uppercase;
+    color: $color-text-dark;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 2px;
+    transition: border-color $transition-fast, color $transition-fast;
+
+    &:hover { border-color: $color-accent; color: $color-accent; }
+  }
+
+  &__about {
+    margin-top: 1.2rem;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    letter-spacing: $letter-spacing-nav;
+    text-transform: uppercase;
+    color: $color-text-dark;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: $spacing-sm $spacing-lg;
+    transition: border-color $transition-fast, color $transition-fast;
+
+    &:hover { border-color: $color-accent; color: $color-accent; }
+  }
+}
+
+// Footer
+.footer {
+  width: 100%;
+  background: #0a0a09;
+  padding: $spacing-xl $spacing-lg $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-lg;
+
+  // Thin gold divider at top
+  &::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: $color-accent;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__nav {
+    display: flex;
+    gap: $spacing-xl;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    a {
+      font-family: $font-primary;
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color $transition-fast;
+
+      &:hover { color: $color-text-dark; }
+    }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    p {
+      font-family: $font-primary;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-style: italic;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &__social {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: center;
+
+    a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-family: $font-primary;
+      font-size: 1rem;
+      transition: color $transition-fast, transform $transition-fast;
+
+      &:hover {
+        color: $color-accent;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &__credit {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    padding-top: $spacing-md;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+    p {
+      font-family: $font-primary;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.25);
+      letter-spacing: 0.08em;
+      font-style: italic;
+    }
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+}
