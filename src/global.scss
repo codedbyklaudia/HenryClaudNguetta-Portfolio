@@ -23,11 +23,12 @@ html, body, #root {
   overflow-x: hidden;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  background: var(--bg);
 }
 
 body {
-  background: $color-bg-dark;
-  color: $color-text-dark;
+  background: var(--bg);
+  color: var(--text);
   font-family: $font-secondary;
   transition: background $transition-base, color $transition-base;
 }

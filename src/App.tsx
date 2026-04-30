@@ -3,6 +3,8 @@ import Navbar from './components/Navbar'
 import Home from './components/HomePage'
 import Contact from './components/Contact'
 import About from './components/About'
+import Gallery from './components/Gallery'
+import Showreel from './components/Showreel'
 import Footer from './components/Footer'
 import './global.scss'
 
@@ -12,12 +14,12 @@ function Layout() {
 
   return (
     <>
-      <Navbar showSun={!isHome} />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/gallery" element={<div />} />
-        <Route path="/showreel" element={<div />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/showreel" element={<Showreel />} />
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />

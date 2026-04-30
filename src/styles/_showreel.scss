@@ -1,0 +1,52 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+.showreel {
+  min-height: auto;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px $spacing-lg $spacing-xl;
+  gap: $spacing-lg;
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  &__btn {
+    font-family: $font-primary;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: $spacing-sm $spacing-lg;
+    transition: background $transition-fast, color $transition-fast, transform $transition-fast;
+
+    &:hover {
+      background: var(--accent);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__player {
+    width: 100%;
+    max-width: 80%;
+    aspect-ratio: 16 / 9;
+    background: #111;
+  }
+
+  &__video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+}

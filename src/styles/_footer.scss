@@ -1,22 +1,25 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+// ─── Footer background per theme ──────────────────────────────────────────────
+:root         { --bg-footer: #0a0a09; }
+[data-theme='light'] { --bg-footer: #d4d4d2; }
+
 .footer {
   width: 100%;
-  background: #0a0a09;
+  background: var(--bg-footer);
   padding: $spacing-xl $spacing-lg $spacing-lg;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: $spacing-lg;
 
-  // Thin gold divider at top
   &::before {
     content: '';
     display: block;
     width: 40px;
     height: 1px;
-    background: $color-accent;
+    background: var(--accent);
     margin-bottom: $spacing-sm;
   }
 
@@ -31,11 +34,11 @@
       font-size: 0.95rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(128, 128, 128, 0.7);
       text-decoration: none;
       transition: color $transition-fast;
 
-      &:hover { color: $color-text-dark; }
+      &:hover { color: var(--text); }
     }
   }
 
@@ -48,7 +51,7 @@
     p {
       font-family: $font-primary;
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(128, 128, 128, 0.8);
       font-style: italic;
       letter-spacing: 0.05em;
     }
@@ -60,13 +63,13 @@
     align-items: center;
 
     a {
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(128, 128, 128, 0.6);
       text-decoration: none;
       font-size: 1rem;
       transition: color $transition-fast, transform $transition-fast;
 
       &:hover {
-        color: $color-accent;
+        color: var(--accent);
         transform: translateY(-2px);
       }
     }
@@ -80,12 +83,12 @@
     flex-wrap: wrap;
     gap: $spacing-sm;
     padding-top: $spacing-md;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(128, 128, 128, 0.12);
 
     p {
       font-family: $font-primary;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(128, 128, 128, 0.4);
       letter-spacing: 0.08em;
       font-style: italic;
     }

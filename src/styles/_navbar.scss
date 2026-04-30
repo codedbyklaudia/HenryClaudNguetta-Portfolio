@@ -2,7 +2,7 @@
 @use './mixins' as *;
 
 .navbar {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
   right: 0;
@@ -14,31 +14,8 @@
   z-index: $z-navbar;
   padding-top: 0;
   pointer-events: none;
-
   & > * { pointer-events: all; }
 
-  &__sun-wrap {
-    width: 200px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: -55px;
-    left: 50%;
-    transform: translateX(-50%);
-    clip-path: inset(50% 0 0 0);
-    pointer-events: none;
-    z-index: $z-navbar;
-  }
-
-  &__sun {
-    width: 200px;
-    height: auto;
-    display: block;
-    transform: rotate(180deg);
-  }
-
-  // Hamburger
   &__burger {
     position: absolute;
     right: $spacing-lg;
@@ -46,8 +23,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
+    @include flex-col;
     gap: 10px;
     padding: $spacing-xs;
 
@@ -61,59 +37,55 @@
   }
 }
 
-// Fullscreen overlay
 .nav-overlay {
   position: fixed;
   inset: 0;
-  background: $color-bg-dark;
+  background: var(--bg);
   z-index: $z-navbar + 5;
   opacity: 0;
   pointer-events: none;
-  transition: opacity $transition-slow;
+  transition: opacity $transition-slow, background $transition-base;
 
   &.open {
     opacity: 1;
     pointer-events: all;
   }
 
-  // X close button top right
   &__close {
     position: absolute;
     top: $spacing-lg;
     right: $spacing-lg;
     background: none;
     border: none;
-    color: $color-text-dark;
+    color: var(--text);
     font-size: 1.4rem;
     cursor: pointer;
     line-height: 1;
     transition: color $transition-fast, transform $transition-base;
 
     &:hover {
-      color: $color-accent;
+      color: var(--accent);
       transform: rotate(90deg);
     }
   }
 
-  // Sun top centre
   &__sun-wrap {
     position: absolute;
-    top: -11%;
+    top: -10%;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
+    width: 250px;
     overflow: hidden;
-    clip-path: inset(50% 0 0 0);
+    clip-path: inset(45% 0 0 0);
   }
 
   &__sun {
-    width: 200px;
+    width: 250px;
     height: auto;
     display: block;
     transform: rotate(180deg);
   }
 
-  // Nav links centre
   &__links {
     position: absolute;
     top: 50%;
@@ -125,14 +97,15 @@
     gap: $spacing-lg;
 
     a {
-      font-family: $font-secondary;
-      font-size: 2.8rem;
-      color: $color-text-dark;
+      font-family: $font-primary;
+      font-size: 2.2rem;
+      color: var(--text);
       text-decoration: none;
       transition: color $transition-fast;
       letter-spacing: 0.02em;
+      line-height: 1.2;
 
-      &:hover { color: $color-accent; }
+      &:hover { color: var(--accent); }
 
       @include mobile {
         font-size: 2rem;
@@ -140,11 +113,10 @@
     }
   }
 
-  // Signature centre bottom
   &__signature {
     position: absolute;
     bottom: $spacing-xl;
-    left: 50%;
+    left: 47%;
     transform: translateX(-50%);
     width: 100px;
     color: rgba(255, 255, 255, 0.4);
@@ -152,7 +124,6 @@
     svg { width: 100%; height: auto; }
   }
 
-  // Social icons bottom left
   &__social {
     position: absolute;
     bottom: $spacing-lg;
@@ -162,16 +133,15 @@
 
     a {
       font-family: $font-primary;
-      font-size: 0.9rem;
-      color: $color-text-dark;
+      font-size: 1.6rem;
+      color: var(--text);
       text-decoration: none;
       transition: color $transition-fast;
 
-      &:hover { color: $color-accent; }
+      &:hover { color: var(--accent); }
     }
   }
 
-  // Theme toggle bottom right
   &__theme {
     position: absolute;
     bottom: $spacing-lg;
@@ -181,16 +151,16 @@
     gap: $spacing-sm;
 
     span {
-      font-family: $font-secondary;
-      font-size: $font-size-sm;
-      color: $color-text-dark;
+      font-family: $font-primary;
+      font-size: $font-size-md;
+      color: var(--text);
       letter-spacing: $letter-spacing-nav;
     }
 
     button {
       background: none;
       border: none;
-      color: $color-text-dark;
+      color: var(--text);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -198,7 +168,7 @@
       font-size: 1rem;
       transition: color $transition-fast;
 
-      &:hover { color: $color-accent; }
+      &:hover { color: var(--accent); }
     }
   }
 

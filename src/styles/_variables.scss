@@ -1,19 +1,30 @@
-// Colours
-$color-bg-light:        #eaeaea;
+// Static Sass Colour Palette
+$color-bg-light:        #c9c3c3;
 $color-bg-dark:         #141414;
 $color-text-light:      #141414;
-$color-text-dark:       #eaeaea;
+$color-text-dark:       #f7f7f7;
 $color-text-muted:      #6b6b68;
+$color-accent:          #f5d479;
+$color-accent-hover:    #8d7a50;
+$color-accent-light: #dfa70c;
+$white:                 #ffffff;
 
-$color-accent:          #f5c131;
-$color-accent-hover:    #e8a820;
+// CSS Custom Properties (theme-aware)
+:root {
+  --bg:     #{$color-bg-dark};
+  --text:   #{$color-text-dark};
+  --accent: #{$color-accent};
+}
 
-$white: #ffffff;
+[data-theme='light'] {
+  --bg:     #{$color-bg-light};
+  --text:   #{$color-text-light};
+  --accent: #{$color-accent-light};
+}
 
 // Typography
 $font-primary:          'Times New Roman', serif;
-$font-secondary:        'Caveat', cursive;
-
+$font-secondary:        'Didact Gothic', sans-serif;
 $font-size-nav:         0.85rem;
 $font-size-base:        1rem;
 $font-size-sm:          0.75rem;
@@ -27,7 +38,7 @@ $spacing-md:            1rem;
 $spacing-lg:            2rem;
 $spacing-xl:            4rem;
 
-// Navbar
+// Navbar 
 $navbar-height:         72px;
 $navbar-sun-size:       140px;
 $navbar-sun-overlap:    50px;
@@ -40,4 +51,3 @@ $transition-slow:       0.6s cubic-bezier(0.4, 0, 0.2, 1);
 // Z-index
 $z-navbar:              100;
 $z-sun:                 99;
-
