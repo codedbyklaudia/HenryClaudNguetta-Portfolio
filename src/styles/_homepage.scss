@@ -8,7 +8,7 @@
   min-height: 100vh;
 }
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
+// Hero
 .hero {
   @include relative;
   width: 100%;
@@ -177,7 +177,7 @@
   100% { transform: translateY(8px); opacity: 0; }
 }
 
-// ─── Gallery — Jan Reeh style ─────────────────────────────────────────────────
+// Gallery
 .gallery-section {
   width: 100%;
   background: var(--bg);
@@ -190,7 +190,7 @@
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px; // tight gap like Jan Reeh
+    gap: 4px;
     max-width: 100%;
     margin: 0 auto;
 
@@ -207,19 +207,20 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    aspect-ratio: 4 / 3; // square-ish cards like Jan Reeh
+    aspect-ratio: 4 / 3;
     background: #111;
 
-    // Poster fades out on hover
+    // poster fades out on hover
     &.is-hovered &__poster {
       opacity: 0;
     }
 
-    // Overlay + title slide up on hover
+    // overlay fades in on hover
     &.is-hovered &__overlay {
       opacity: 1;
     }
 
+    // title slides up on hover
     &.is-hovered &__title {
       transform: translateY(0);
       opacity: 1;
@@ -244,7 +245,7 @@
     pointer-events: none;
   }
 
-  // Dark gradient overlay with title — hidden by default
+  // gradient overlay + title — hidden by default
   &__overlay {
     position: absolute;
     inset: 0;
@@ -274,7 +275,7 @@
   }
 }
 
-// ─── CTA ──────────────────────────────────────────────────────────────────────
+// CTA
 .cta {
   width: 100%;
   display: flex;
@@ -312,7 +313,7 @@
   }
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
+// Footer
 .footer {
   width: 100%;
   background: #0a0a09;
