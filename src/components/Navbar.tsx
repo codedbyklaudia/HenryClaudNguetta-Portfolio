@@ -3,7 +3,16 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLinkedinIn, faVimeoV } from '@fortawesome/free-brands-svg-icons'
 import '../styles/_navbar.scss'
+import signImg from '../../images/sign.png'
 import sunImg from '../images/sun.png'
+
+const NAV_LINKS = [
+  { to: '/',         label: 'Home' },
+  { to: '/about',    label: 'About Me' },
+  { to: '/gallery',  label: 'Gallery' },
+  { to: '/showreel', label: 'Showreel' },
+  { to: '/contact',  label: 'Contact' },
+]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -25,39 +34,61 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Burger — always visible, sits above everything */}
       <nav className="navbar">
         <button
-          className="navbar__burger"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
+          className={`navbar__burger${open ? ' open' : ''}`}
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
         >
-          <span /><span /><span />
+          <span />
+          <span />
+          <span />
         </button>
       </nav>
-      <div className={`nav-overlay${open ? ' open' : ''}`}>
-        <button className="nav-overlay__close" onClick={close} aria-label="Close menu">✕</button>
-        <div className="nav-overlay__sun-wrap">
-          <img src={sunImg} alt="" className="nav-overlay__sun" />
+
+      <div className={`nav-overlay${open ? ' open' : ''}`} aria-hidden={!open}>
+        {/* Split curtain panels */}
+        <div className="nav-overlay__curtain-left" />
+        <div className="nav-overlay__curtain-right" />
+
+        {/* Centred monogram + signature */}
+        <div className="nav-overlay__brand">
+          <div className="nav-overlay__brand-center">
+            <img src={sunImg} alt="" className="nav-overlay__sun" aria-hidden="true" />
+            <span className="nav-overlay__monogram" aria-hidden="true">HCN</span>
+          </div>
+          <img src={signImg} alt="Signature" className="nav-overlay__signature" />
         </div>
+
+        {/* Links */}
         <nav className="nav-overlay__links">
-          <Link to="/"         onClick={close}>Home</Link>
-          <Link to="/about"    onClick={close}>About Me</Link>
-          <Link to="/gallery"  onClick={close}>Gallery</Link>
-          <Link to="/showreel" onClick={close}>Showreel</Link>
-          <Link to="/contact"  onClick={close}>Contact</Link>
+          {NAV_LINKS.map(({ to, label }, i) => (
+            <Link
+              key={to}
+              to={to}
+              onClick={close}
+              className="nav-overlay__link"
+              style={{ '--i': i } as React.CSSProperties}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
-        <div className="nav-overlay__signature">
-          <img src="../../images/sign.png" alt="Signature" />
-        </div>
-        <div className="nav-overlay__social">
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedinIn} /></a>
-          <a href="https://vimeo.com"    target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faVimeoV} /></a>
-        </div>
-        <div className="nav-overlay__theme">
-          <span>Theme</span>
-          <button onClick={toggleTheme} aria-label="Toggle theme">
-            {theme === 'dark' ? '☽' : '☀'}
-            <span className="nav-overlay__theme-arrow"></span>
+
+        {/* Bottom meta bar */}
+        <div className="nav-overlay__meta">
+          <div className="nav-overlay__social">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faLinkedinIn} />
+            </a>
+            <a href="https://vimeo.com" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faVimeoV} />
+            </a>
+          </div>
+          <button className="nav-overlay__theme" onClick={toggleTheme} aria-label="Toggle theme">
+            <span>Theme</span>
+            <span>{theme === 'dark' ? '☽' : '☀'}</span>
           </button>
         </div>
       </div>
