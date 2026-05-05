@@ -1,15 +1,22 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .about {
   background: var(--bg);
   color: var(--text);
   min-height: auto;
-  padding-top: $spacing-lg;
   position: relative;
+  overflow-x: hidden;
 
+  // Sun
   &__side-sun {
     position: fixed;
+    display: none;
     left: -80px;
     top: 50%;
     transform: translateY(-50%);
@@ -17,272 +24,322 @@
     height: 220px;
     pointer-events: none;
     z-index: 0;
-    opacity: 1;
+    opacity: 0.6;
+    mix-blend-mode: screen;
     transition: opacity 0.6s ease;
 
     &--hidden { opacity: 0; }
+    img { width: 100%; height: auto; display: block; }
+  }
 
-    img {
-      width: 100%;
-      height: auto;
+  [data-theme='light'] &__side-sun {
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+  }
+
+  // Chapter marker
+  &__chapter {
+    font-family: $font-primary;
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    &::before {
+      content: '';
       display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
     }
   }
 
-  &__intro {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: $spacing-xl $spacing-lg $spacing-lg;
-    position: relative;
-    z-index: 1;
-
-    p {
-      font-family: $font-primary;
-      font-size: 1.4rem;
-      line-height: 1.9;
-      color: rgba(128, 128, 128, 0.9);
-      letter-spacing: 0.03em;
-      text-align: center;
-    }
-  }
-
-  &__divider {
-    border: none;
-    border-top: 1px solid rgba(128, 128, 128, 0.2);
-    margin: $spacing-lg 0;
-
-    &--short {
-      width: 60px;
-      height: 0;
-      border: none;
-      border-top: 2px solid var(--accent);
-      margin: $spacing-sm auto $spacing-lg;
-      display: block;
-    }
-  }
-
-  // Bio
-  &__bio {
+  // Hero
+  &__hero {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: $spacing-xl;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: $spacing-lg;
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-xl * 2;
+    align-items: end;
+    padding: 120px $spacing-xl $spacing-xl;
+    border-bottom: 1px solid var(--border-subtle);
     position: relative;
     z-index: 1;
+    animation: fadeUp 0.9s ease both 0.1s;
 
     @include tablet {
       grid-template-columns: 1fr;
+      gap: $spacing-xl;
+      padding: 120px $spacing-lg $spacing-xl;
     }
   }
 
+  &__hero-ghost {
+    font-family: $font-primary;
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-style: italic;
+    color: var(--accent);
+    opacity: 0.07;
+    line-height: 1;
+    margin-bottom: -0.6em;
+    letter-spacing: -0.02em;
+    user-select: none;
+  }
+
+  &__hero-name {
+    font-family: $font-primary;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+
+    em {
+      font-style: italic;
+      color: var(--accent);
+      display: block;
+    }
+  }
+
+  &__hero-role {
+    font-family: $font-primary;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: $spacing-md;
+  }
+
+  &__hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $spacing-lg;
+
+    @include tablet { align-items: flex-start; }
+  }
+
+  &__hero-quote {
+    font-family: $font-primary;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--text-muted);
+    text-align: right;
+    max-width: 700px;
+    position: relative;
+    padding-right: $spacing-lg;
+
+    // Vertical accent line on right
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+      background: var(--accent);
+      opacity: 0.3;
+    }
+
+    @include tablet {
+      text-align: left;
+      padding-right: 0;
+      padding-left: $spacing-lg;
+      &::after { right: auto; left: 0; }
+    }
+  }
+
+  &__cv-row {
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+
+    @include tablet { justify-content: flex-start; }
+  }
+
+  &__cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-primary;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: $spacing-sm $spacing-lg;
+    cursor: pointer;
+    transition: all $transition-base;
+    position: relative;
+    overflow: hidden;
+
+    &--primary {
+      background: var(--accent);
+      color: $color-bg-dark;
+      border: 1px solid var(--accent);
+
+      // Sweep overlay on hover
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.15);
+        transform: translateX(-101%);
+        transition: transform 0.35s cubic-bezier(0.77, 0, 0.18, 1);
+      }
+
+      span { position: relative; z-index: 1; }
+      &:hover::before { transform: translateX(0); }
+      &:hover { transform: translateY(-2px); }
+    }
+
+    &--secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-subtle);
+
+      &:hover {
+        border-color: rgba(128, 128, 128, 0.4);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Bio — photo left, text right
+  &__bio {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: $spacing-xl * 2;
+    padding: $spacing-xl * 1.5 $spacing-xl;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: start;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s ease both 0.2s;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: $spacing-xl;
+      padding: $spacing-xl $spacing-lg;
+    }
+  }
+
+  // Left column: photo stacked above role card
+  &__bio-left {
+    @include flex-col;
+    gap: 0;
+  }
+
   &__bio-image {
+    position: relative;
+
     img {
       width: 100%;
       aspect-ratio: 3 / 4;
       object-fit: cover;
       display: block;
-      filter: grayscale(20%);
+      filter: grayscale(15%);
+    }
+
+    // Top-left corner bracket
+    &::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 40px;
+      height: 40px;
+      border-left: 1px solid var(--accent);
+      border-top: 1px solid var(--accent);
+      opacity: 0.35;
+      pointer-events: none;
     }
   }
 
+  // Role card flush below photo
+  &__role-card {
+    border: 1px solid var(--border-subtle);
+    border-top: none;
+    padding: $spacing-lg;
+    @include flex-col;
+    gap: $spacing-md;
+    position: relative;
+  }
+
+  &__role-tag {
+    font-family: $font-primary;
+    font-size: 0.9rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  &__role-text {
+    font-family: $font-primary;
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  &__role-actions {
+    display: flex;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+    padding-top: $spacing-sm;
+  }
+
+  // Right column: biography text
   &__bio-text {
     @include flex-col;
-    gap: $spacing-md;
+    gap: $spacing-lg;
+    padding-top: $spacing-sm;
 
     p {
       font-family: $font-primary;
-      font-size: 1.2rem;
-      line-height: 1.85;
-      color: rgba(128, 128, 128, 0.9);
-      letter-spacing: 0.03em;
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      line-height: 2;
+      color: var(--text);
+      letter-spacing: 0.02em;
     }
   }
 
-  // Details
-  &__details {
-    max-width: 1100px;
-    margin: $spacing-xl auto;
-    padding: $spacing-xl $spacing-lg;
-    border-top: 1px solid rgba(128, 128, 128, 0.15);
-    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
-    position: relative;
-    z-index: 1;
-  }
-
-  &__details-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: $spacing-lg;
-
-    @include tablet {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include mobile {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__details-item {
-    @include flex-col;
-    gap: 6px;
-  }
-
-  &__details-label {
-    font-family: $font-primary;
-    font-size: 1.1rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-
-  &__details-value {
-    font-family: $font-primary;
-    font-size: 1rem;
-    color: rgba(128, 128, 128, 0.9);
-    letter-spacing: 0.02em;
-
-    &--link {
-      text-decoration: none;
-      transition: color $transition-fast;
-      &:hover { color: var(--accent); }
-    }
-  }
-
-  &__details-social {
-    display: flex;
-    gap: $spacing-md;
-
-    a {
-      font-family: $font-primary;
-      font-size: 0.9rem;
-      color: rgba(128, 128, 128, 0.9);
-      text-decoration: none;
-      transition: color $transition-fast;
-      &:hover { color: var(--accent); }
-    }
-  }
-
-  // Career
-  &__career {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: $spacing-xl $spacing-lg 120px;
-    position: relative;
-    z-index: 1;
-  }
-
-  &__career-header {
-    margin-bottom: $spacing-xl;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  &__career-title {
-    font-family: $font-secondary;
-    font-size: 2.5rem;
-    font-weight: 400;
-    color: var(--text);
-    letter-spacing: 0.04em;
-    margin: 0 0 $spacing-sm;
-  }
-
-  &__career-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-lg;
-    align-items: stretch;
-
-    @include mobile {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__career-card {
-    @include flex-col;
-    align-items: center;
-    text-align: center;
-    gap: $spacing-md;
-    padding: $spacing-xl;
-    border: 1px solid rgba(128, 128, 128, 0.15);
-    transition: border-color $transition-fast;
-
-    &:hover {
-      border-color: rgba(128, 128, 128, 0.4);
-    }
-
-    &--accent {
-      border-color: rgba($color-accent, 0.3);
-      &:hover {
-        border-color: var(--accent);
-      }
-    }
-
-    p {
-      font-family: $font-primary;
-      font-size: 1rem;
-      line-height: 1.8;
-      color: rgba(128, 128, 128, 0.85);
-      letter-spacing: 0.03em;
-      flex: 1;
-    }
-  }
-
-  &__career-card-tag {
-    font-family: $font-primary;
-    font-size: 1.1rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-
-  &__cta-buttons {
-    display: flex;
-    flex-direction: row;
-    gap: $spacing-md;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    @include mobile {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-
-  // Buttons
+  // Shared button styles
   &__btn {
     display: inline-flex;
     align-items: center;
-    gap: $spacing-sm;
+    gap: 8px;
     font-family: $font-primary;
-    font-size: 0.9rem;
-    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     text-decoration: none;
     padding: $spacing-sm $spacing-lg;
-    transition: all $transition-fast;
+    transition: all $transition-base;
     cursor: pointer;
-    width: fit-content;
 
     &--outline {
-      border: 1px solid rgba(128, 128, 128, 0.35);
+      border: 1px solid var(--border-subtle);
       color: var(--text);
       background: transparent;
       &:hover {
-        border-color: var(--text);
-        background: rgba(128, 128, 128, 0.08);
+        border-color: rgba(128, 128, 128, 0.4);
+        transform: translateY(-2px);
       }
     }
 
     &--gold {
-      border: 1px solid var(--accent);
+      border: 1px solid rgba($color-accent, 0.4);
       color: var(--accent);
       background: transparent;
       &:hover {
-        background: rgba(245, 193, 49, 0.1);
+        background: rgba($color-accent, 0.06);
+        border-color: var(--accent);
+        transform: translateY(-2px);
       }
     }
   }

@@ -5,7 +5,7 @@
   width: 100%;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
+  min-height: auto;
 }
 
 // Hero
@@ -183,9 +183,7 @@
   background: var(--bg);
   padding: $spacing-xl $spacing-lg;
 
-  @include mobile {
-    padding: $spacing-lg $spacing-md;
-  }
+  @include mobile { padding: $spacing-lg $spacing-md; }
 
   &__grid {
     display: grid;
@@ -194,13 +192,30 @@
     max-width: 100%;
     margin: 0 auto;
 
-    @include tablet {
-      grid-template-columns: repeat(2, 1fr);
+    @include tablet { grid-template-columns: repeat(2, 1fr); }
+    @include mobile { grid-template-columns: 1fr; }
+  }
+
+  // Row 
+  &__row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+
+    > .gallery-section__item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
     }
 
-    @include mobile {
-      grid-template-columns: 1fr;
-    }
+    &--visible > .gallery-section__item {
+    opacity: 1;
+    transform: translateY(0);
+
+    &:nth-child(1) { transition-delay: 0ms; }
+    &:nth-child(2) { transition-delay: 100ms; }
+    &:nth-child(3) { transition-delay: 200ms; }
+  }
   }
 
   &__item {
@@ -210,21 +225,9 @@
     aspect-ratio: 4 / 3;
     background: #111;
 
-    // poster fades out on hover
-    &.is-hovered &__poster {
-      opacity: 0;
-    }
-
-    // overlay fades in on hover
-    &.is-hovered &__overlay {
-      opacity: 1;
-    }
-
-    // title slides up on hover
-    &.is-hovered &__title {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    &.is-hovered &__poster { opacity: 0; }
+    &.is-hovered &__overlay { opacity: 1; }
+    &.is-hovered &__title { transform: translateY(0); opacity: 1; }
   }
 
   &__poster {
@@ -245,7 +248,6 @@
     pointer-events: none;
   }
 
-  // gradient overlay + title — hidden by default
   &__overlay {
     position: absolute;
     inset: 0;
@@ -286,7 +288,7 @@
 
   &__more {
     font-family: $font-primary;
-    font-size: $font-size-sm;
+    font-size: $font-size-md;
     letter-spacing: $letter-spacing-nav;
     text-transform: uppercase;
     color: var(--text);

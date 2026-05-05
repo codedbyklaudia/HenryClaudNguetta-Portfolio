@@ -1,25 +1,26 @@
 // Static Sass Colour Palette
-$color-bg-light:        #c9c3c3;
+$color-bg-light:        #f2ede6;
 $color-bg-dark:         #141414;
 $color-text-light:      #141414;
 $color-text-dark:       #f7f7f7;
-$color-text-muted:      #6b6b68;
-$color-accent:          #f5d479;
+$color-text-muted:      #464646;
+$color-accent:          #DACC3E;
 $color-accent-hover:    #8d7a50;
-$color-accent-light: #dfa70c;
+$color-accent-light: #ABA021;
 $white:                 #ffffff;
-
-// CSS Custom Properties (theme-aware)
 :root {
-  --bg:     #{$color-bg-dark};
-  --text:   #{$color-text-dark};
-  --accent: #{$color-accent};
+  --bg:             #{$color-bg-dark};
+  --text:           #{$color-text-dark};
+  --accent:         #{$color-accent} !important;
+  --text-muted:     rgba(247, 247, 247, 0.30); 
+  --border-subtle:  rgba(247, 247, 247, 0.04); 
 }
-
 [data-theme='light'] {
-  --bg:     #{$color-bg-light};
-  --text:   #{$color-text-light};
-  --accent: #{$color-accent-light};
+  --bg:             #{$color-bg-light};
+  --text:           #{$color-text-light};
+  --accent:         #{$color-accent-light} !important;
+  --text-muted:     rgba(15, 15, 15, 0.4); 
+  --border-subtle:  rgba(20, 20, 20, 0.08); 
 }
 
 // Typography
@@ -37,6 +38,7 @@ $spacing-sm:            0.5rem;
 $spacing-md:            1rem;
 $spacing-lg:            2rem;
 $spacing-xl:            4rem;
+$spacing-xxl:           7rem;
 
 // Navbar 
 $navbar-height:         72px;

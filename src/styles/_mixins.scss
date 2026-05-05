@@ -17,14 +17,16 @@
   display: flex;
   flex-direction: column;
 }
+
 @mixin absolute {
   position: absolute;
 }
+
 @mixin relative {
   position: relative;
 }
 
-//  Typography 
+// Typography
 @mixin nav-link-style {
   font-family: $font-secondary;
   font-size: $font-size-nav;
@@ -42,19 +44,25 @@
   text-decoration: none;
 }
 
-// Theme 
-@mixin light-theme {
-  --bg:           #{$color-bg-light};
-  --text:         #{$color-text-light};
-  --text-muted:   #{$color-text-muted};
-  --nav-border:   rgba(0, 0, 0, 0.08);
+// Theme
+@mixin dark-theme {
+  --bg:            #{$color-bg-dark};
+  --text:          #{$color-text-dark};
+  --accent:        #{$color-accent};
+  --text-muted:    rgba(247, 247, 247, 0.30);
+  --border-subtle: rgba(247, 247, 247, 0.04);
+  --nav-border:    rgba(255, 255, 255, 0.08);
+  --bg-footer:     #0a0a09;
 }
 
-@mixin dark-theme {
-  --bg:           #{$color-bg-dark};
-  --text:         #{$color-text-dark};
-  --text-muted:   #888884;
-  --nav-border:   rgba(255, 255, 255, 0.08);
+@mixin light-theme {
+  --bg:            #{$color-bg-light};
+  --text:          #{$color-text-light};
+  --accent:        #{$color-accent-light};
+  --text-muted:    rgba(20, 20, 20, 0.40);
+  --border-subtle: rgba(20, 20, 20, 0.08);
+  --nav-border:    rgba(0, 0, 0, 0.08);
+  --bg-footer:     #d4d4d2;
 }
 
 // Sun
@@ -70,7 +78,7 @@
   transform-origin: bottom center;
 }
 
-// Responsive 
+// Responsive
 @mixin mobile {
   @media (max-width: 640px) { @content; }
 }
@@ -84,7 +92,11 @@
   transition: transform $transition-base;
   &:hover { transform: translateY(-2px); }
 }
-
+@mixin none {
+  outline: none;
+  border: none;
+  background: none;
+}
 @mixin subtle-underline {
   position: relative;
   &::after {

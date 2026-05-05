@@ -1,8 +1,7 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-// ─── Burger ───────────────────────────────────────────────────────────────────
-
+// Burger
 .navbar {
   position: fixed !important;
   top: 0;
@@ -11,46 +10,61 @@
   height: $navbar-height;
   display: flex;
   align-items: flex-start;
-  z-index: $z-navbar + 10; // always above the overlay
+  z-index: $z-navbar + 10;
   pointer-events: none;
   & > * { pointer-events: all; }
 
   &__burger {
-    position: absolute;
-    right: $spacing-lg;
-    top: $spacing-md;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: $spacing-xs;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  position: absolute;
+  right: $spacing-lg;
+  top: $spacing-md;
+  @include none;
+  cursor: pointer;
+  padding: $spacing-xs;
+  @include flex-col;
+  gap: 5px;
 
-    span {
-      display: block;
-      height: 1.5px;
-      background: var(--text);
-      transition: transform 0.4s ease, opacity 0.3s ease, width 0.3s ease;
+  span {
+  display: block;
+  height: 1.5px;
+  background: $color-text-dark; 
+  transition: transform 0.4s ease, opacity 0.3s ease, width 0.3s ease;
 
-      &:nth-child(1) { width: 28px; }
-      &:nth-child(2) { width: 18px; }
-      &:nth-child(3) { width: 24px; }
-    }
-
-    // morphs into ✕ when open
-    &.open span {
-      &:nth-child(1) { width: 28px; transform: rotate(45deg) translate(4.5px, 4.5px); }
-      &:nth-child(2) { opacity: 0; }
-      &:nth-child(3) { width: 28px; transform: rotate(-45deg) translate(4.5px, -4.5px); }
-    }
-
-    &:hover span { background: var(--accent); }
-  }
+  &:nth-child(1) { width: 40px; }
+  &:nth-child(2) { width: 30px; }
+  &:nth-child(3) { width: 36px; }
 }
 
-// ─── Overlay ─────────────────────────────────────────────────────────────────
+// Light theme — dark burger
+[data-theme='light'] & span {
+  background: $color-text-light;
+}
 
+// Homepage — always white, even on light theme
+&--home span,
+[data-theme='light'] &--home span {
+  background: $color-text-dark;
+}
+
+// When open — always dark bars on all pages/themes
+&.open span,
+[data-theme='light'] &.open span,
+&--home.open span,
+[data-theme='light'] &--home.open span {
+  background: $color-text-light;
+}
+
+&:hover span { background: var(--accent) !important; }
+
+&.open span {
+  &:nth-child(1) { width: 28px; transform: rotate(45deg) translate(4.5px, 4.5px); }
+  &:nth-child(2) { opacity: 0; }
+  &:nth-child(3) { width: 28px; transform: rotate(-45deg) translate(4.5px, -4.5px); }
+}
+}
+}
+
+// Overlay
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -63,10 +77,9 @@
     .nav-overlay__curtain-left  { transform: translateX(0); }
     .nav-overlay__curtain-right { transform: translateX(0); }
     .nav-overlay__link          { opacity: 1; transform: translateX(0); }
-    .nav-overlay__meta          { opacity: 1; transform: translateY(0); }
   }
 
-  // ── Curtain panels ─────────────────────────────────────────────────────
+  // Curtain panels
   &__curtain-left,
   &__curtain-right {
     position: absolute;
@@ -80,7 +93,7 @@
   &__curtain-left {
     left: 0;
     transform: translateX(-100%);
-    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    border-right: 1px solid var(--border-subtle);
   }
 
   &__curtain-right {
@@ -88,7 +101,7 @@
     transform: translateX(100%);
   }
 
-  // ── Brand: monogram + signature centred on right half ──────────────────
+  // Brand — right half (hidden on mobile)
   &__brand {
     position: absolute;
     right: 0;
@@ -102,6 +115,14 @@
     z-index: 2;
     opacity: 0;
     transition: opacity 0.5s ease 0.5s;
+
+    [data-theme='light'] & {
+      transform: translateY(-40%);
+    }
+
+    @include mobile {
+      display: none;
+    }
   }
 
   &.open .nav-overlay__brand { opacity: 1; }
@@ -117,16 +138,20 @@
     position: absolute;
     width: clamp(100px, 14vw, 180px);
     height: auto;
-    opacity: 0.05;
+    opacity: 0.08;
     filter: blur(1px);
     pointer-events: none;
     user-select: none;
+
+    [data-theme='light'] & {
+      opacity: 0.4;
+    }
   }
 
   &__monogram {
     font-family: $font-primary;
     font-size: clamp(3rem, 6vw, 5rem);
-    color: rgba(255, 255, 255, 0.442);
+    color: var(--text-muted);
     letter-spacing: 0.15em;
     user-select: none;
     line-height: 1;
@@ -135,23 +160,30 @@
   &__signature {
     width: clamp(80px, 10vw, 120px);
     height: auto;
-    
-    filter: invert(1); 
+    filter: invert(1);
+
+    [data-theme='light'] & { filter: invert(0); transform: translateY(-30%); }
   }
 
-  // Links
+  // Links + socials container
   &__links {
     position: absolute;
     top: 50%;
-    left: 12%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
+    left: 15%;
+    transform: translateY(-40%);
+    @include flex-col;
+    align-items: center;
     gap: $spacing-sm;
     z-index: 2;
 
     @include mobile {
-      left: 8%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      padding: 0 $spacing-lg;
     }
   }
 
@@ -165,43 +197,38 @@
     opacity: 0;
     transform: translateX(-20px);
     transition:
-      opacity   0.45s ease calc(0.35s + var(--i, 0) * 0.07s),
-      transform 0.45s ease calc(0.35s + var(--i, 0) * 0.07s),
-      color         0.2s ease,
+      opacity        0.45s ease calc(0.35s + var(--i, 0) * 0.07s),
+      transform      0.45s ease calc(0.35s + var(--i, 0) * 0.07s),
+      color          0.2s ease,
       letter-spacing 0.35s ease;
 
-    &:hover {
-      color: var(--accent);
-      letter-spacing: 0.08em;
-    }
-  }
-
-  // ── Meta bar ───────────────────────────────────────────────────────────
-  &__meta {
-    position: absolute;
-    bottom: $spacing-lg;
-    left: 12%;
-    right: $spacing-lg;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.4s ease 0.65s, transform 0.4s ease 0.65s;
+    &:hover { color: var(--accent); letter-spacing: 0.08em; }
+    &.active { color: var(--accent); }
 
     @include mobile {
-      left: 8%;
+      font-size: clamp(1.8rem, 8vw, 2.4rem);
+      text-align: center;
     }
   }
 
+  // Socials
   &__social {
     display: flex;
     gap: $spacing-md;
+    margin-top: $spacing-xxl;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.65s;
+
+    .nav-overlay.open & { opacity: 1; }
+
+    @include mobile {
+      justify-content: center;
+      margin-top: $spacing-lg;
+    }
 
     a {
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.3);
+      font-size: 2rem;
+      color: var(--text-muted);
       text-decoration: none;
       transition: color $transition-fast, transform $transition-fast;
 
@@ -212,21 +239,45 @@
     }
   }
 
+  // Meta — theme toggle, bottom right
+  &__meta {
+    position: absolute;
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease 0.65s, transform 0.4s ease 0.65s;
+
+    .nav-overlay.open & {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @include mobile {
+      right: 50%;
+      transform: translateX(50%) translateY(8px);
+
+      .nav-overlay.open & {
+        transform: translateX(50%) translateY(0);
+      }
+    }
+  }
+
   &__theme {
     display: flex;
     align-items: center;
     gap: $spacing-sm;
-    background: none;
-    border: none;
+    @include none;
     cursor: pointer;
     transition: color $transition-fast;
 
     span {
       font-family: $font-primary;
-      font-size: $font-size-sm;
+      font-size: $font-size-md;
       letter-spacing: $letter-spacing-nav;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.3);
+      color: var(--text-muted);
     }
 
     &:hover span { color: var(--accent); }

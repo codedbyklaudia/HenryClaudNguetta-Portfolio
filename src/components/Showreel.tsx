@@ -1,32 +1,61 @@
+import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import '../styles/_showreel.scss'
 import showreelVideo from '../../images/ShowreelHCN.mp4'
-import { Link } from 'react-router-dom'
 
 export default function Showreel() {
+  const playerRef = useRef<HTMLDivElement>(null)
+
+  const scrollToPlayer = () => {
+    playerRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <div className="showreel">
-      <div className="showreel__actions">
-        <a
-          href="https://vimeo.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="showreel__btn"
-        >
-          Play on Vimeo ↗
-        </a>
-        <Link to="/contact" className="showreel__btn">
-          Contact ↗
-        </Link>
+
+      {/* Header — same structure as gallery */}
+      <div className="showreel__header">
+        <div className="showreel__header-left">
+          <p className="showreel__header-eyebrow">Henry Claud N'Guetta</p>
+          <h1 className="showreel__header-title">
+            The <em>Showreel</em>
+          </h1>
+        </div>
+        <div className="showreel__header-right">
+          <div className="showreel__header-meta">2024</div>
+          <div className="showreel__header-meta-label">Latest Reel</div>
+        </div>
       </div>
 
-      <div className="showreel__player">
-        <video
-          src={showreelVideo}
-          controls
-          playsInline
-          className="showreel__video"
-        />
+      
+
+      {/* Player */}
+      <div className="showreel__player-section" ref={playerRef}>
+        <div className="showreel__player">
+          <video
+            src={showreelVideo}
+            controls
+            playsInline
+            className="showreel__video"
+          />
+        </div>
+
+        <div className="showreel__cta-row">
+            <a
+            href="https://vimeo.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="showreel__btn showreel__btn--primary"
+          >
+            <span>Watch on Vimeo</span>
+            <span>↗</span>
+          </a>
+          <Link to="/contact" className="showreel__btn showreel__btn--secondary">
+            Get in touch ↗
+          </Link>
+        </div>
       </div>
+
     </div>
   )
 }

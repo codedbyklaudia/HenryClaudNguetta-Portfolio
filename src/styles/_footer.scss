@@ -1,16 +1,15 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-// ─── Footer background per theme ──────────────────────────────────────────────
+// Footer background per theme
 :root         { --bg-footer: #0a0a09; }
-[data-theme='light'] { --bg-footer: #d4d4d2; }
+[data-theme='light'] { --bg-footer: #d6cec4 !important;  }
 
 .footer {
   width: 100%;
   background: var(--bg-footer);
   padding: $spacing-xl $spacing-lg $spacing-lg;
-  display: flex;
-  flex-direction: column;
+  @include flex-col;
   align-items: center;
   gap: $spacing-lg;
 
@@ -34,24 +33,23 @@
       font-size: 0.95rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(128, 128, 128, 0.7);
+      color: var(--text);
       text-decoration: none;
       transition: color $transition-fast;
 
-      &:hover { color: var(--text); }
+      &:hover { color: var(--accent); }
     }
   }
 
   &__contact {
-    display: flex;
-    flex-direction: column;
+    @include flex-col;
     align-items: center;
     gap: 6px;
 
     p {
       font-family: $font-primary;
       font-size: 1rem;
-      color: rgba(128, 128, 128, 0.8);
+      color: var(--text);
       font-style: italic;
       letter-spacing: 0.05em;
     }
@@ -63,7 +61,7 @@
     align-items: center;
 
     a {
-      color: rgba(128, 128, 128, 0.6);
+      color: var(--text);
       text-decoration: none;
       font-size: 1rem;
       transition: color $transition-fast, transform $transition-fast;
@@ -87,8 +85,8 @@
 
     p {
       font-family: $font-primary;
-      font-size: 0.75rem;
-      color: rgba(128, 128, 128, 0.4);
+      font-size: 0.85rem;
+      color: var(--text);
       letter-spacing: 0.08em;
       font-style: italic;
     }

@@ -1,46 +1,235 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-.showreel {
-  min-height: auto;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px $spacing-lg $spacing-xl;
-  gap: $spacing-lg;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  &__actions {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 780px;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.showreel {
+  min-height: 100vh;
+  background: var(--bg);
+  @include flex-col;
+  position: relative;
+  overflow-x: hidden;
+
+  // Grain
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.022;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  &__btn {
-    font-family: $font-primary;
-    font-size: 0.8rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: $spacing-sm $spacing-lg;
-    transition: background $transition-fast, color $transition-fast, transform $transition-fast;
+  // Header — matches gallery layout
+  &__header {
+    padding: 120px $spacing-xl $spacing-lg;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: $spacing-lg;
+    border-bottom: 1px solid var(--border-subtle);
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s ease both 0.1s;
 
-    &:hover {
-      background: var(--accent);
-      color: var(--bg);
-      transform: translateY(-2px);
+    @include mobile {
+      grid-template-columns: 1fr;
+      padding: 100px $spacing-lg $spacing-lg;
+      gap: $spacing-md;
     }
   }
 
+  &__header-eyebrow {
+    font-family: $font-primary;
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+  }
+
+  &__header-title {
+    font-family: $font-primary;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+
+    em {
+      font-style: italic;
+      color: var(--accent);
+    }
+  }
+
+  &__header-tagline {
+    font-family: $font-primary;
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: $spacing-md;
+    max-width: 420px;
+  }
+
+  &__header-right {
+    text-align: right;
+    padding-bottom: 4px;
+
+    @include mobile { text-align: left; }
+  }
+
+  &__header-meta {
+    font-family: $font-primary;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    opacity: 0.2;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  &__header-meta-label {
+    font-family: $font-primary;
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  // Actions row below header
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    flex-wrap: wrap;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid var(--border-subtle);
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s ease both 0.2s;
+
+    @include mobile { padding: $spacing-lg; }
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-primary;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: $spacing-md $spacing-xl;
+    cursor: pointer;
+    transition: all $transition-base;
+    position: relative;
+    overflow: hidden;
+
+    &--primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.15);
+        transform: translateX(-101%);
+        transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+      }
+
+      span { position: relative; z-index: 1; }
+      &:hover::before { transform: translateX(0); }
+      &:hover { transform: translateY(-2px); }
+    }
+
+    &--secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-subtle);
+
+      &:hover {
+        border-color: var(--text-muted);
+        color: var(--text);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &__vimeo {
+    font-family: $font-primary;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 2px;
+    transition: color $transition-fast, border-color $transition-fast;
+
+    &:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+  }
+
+  // Player section
+  &__player-section {
+    background: var(--bg);
+    padding: $spacing-xl $spacing-xl 120px;
+    @include flex-col;
+    align-items: center;
+    gap: $spacing-xl;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s ease both 0.3s;
+
+    @include mobile { padding: $spacing-xl $spacing-lg 80px; }
+  }
   &__player {
     width: 100%;
-    max-width: 80%;
+    max-width: 900px;
     aspect-ratio: 16 / 9;
-    background: #111;
+    background: var(--bg);
+    position: relative;
+    border: 1px solid var(--border-subtle);
+
+    // Top accent line
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 60px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
+    }
   }
 
   &__video {
@@ -48,5 +237,13 @@
     height: 100%;
     display: block;
     object-fit: cover;
+  }
+
+  &__cta-row {
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: $spacing-md;
   }
 }
