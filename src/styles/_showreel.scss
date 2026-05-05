@@ -12,7 +12,7 @@
 }
 
 .showreel {
-  min-height: 100vh;
+  min-height: auto;
   background: var(--bg);
   @include flex-col;
   position: relative;
@@ -29,7 +29,7 @@
     z-index: 0;
   }
 
-  // Header — matches gallery layout
+  // Header
   &__header {
     padding: 120px $spacing-xl $spacing-lg;
     display: grid;
@@ -50,12 +50,11 @@
 
   &__header-eyebrow {
     font-family: $font-primary;
-    font-size: 0.68rem;
+    font-size: $font-eyebrow;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--accent);
-    display: flex;
-    align-items: center;
+    @include align-center;
     gap: $spacing-md;
     margin-bottom: $spacing-md;
 
@@ -95,7 +94,6 @@
   &__header-right {
     text-align: right;
     padding-bottom: 4px;
-
     @include mobile { text-align: left; }
   }
 
@@ -121,13 +119,12 @@
 
   // Actions row below header
   &__actions {
-    display: flex;
-    align-items: center;
+    @include align-center;
     gap: $spacing-lg;
     flex-wrap: wrap;
     padding: $spacing-lg $spacing-xl;
     border-bottom: 1px solid var(--border-subtle);
-    position: relative;
+    @include relative;
     z-index: 1;
     animation: fadeUp 0.9s ease both 0.2s;
 
@@ -139,14 +136,14 @@
     align-items: center;
     gap: 8px;
     font-family: $font-primary;
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     text-decoration: none;
     padding: $spacing-md $spacing-xl;
     cursor: pointer;
     transition: all $transition-base;
-    position: relative;
+    @include relative;
     overflow: hidden;
 
     &--primary {
@@ -156,7 +153,7 @@
 
       &::before {
         content: '';
-        position: absolute;
+        @include absolute;
         inset: 0;
         background: rgba(0, 0, 0, 0.15);
         transform: translateX(-101%);
@@ -183,7 +180,7 @@
 
   &__vimeo {
     font-family: $font-primary;
-    font-size: 0.68rem;
+    font-size: 0.85rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     text-decoration: none;

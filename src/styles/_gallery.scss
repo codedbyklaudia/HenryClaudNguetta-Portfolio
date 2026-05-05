@@ -24,7 +24,7 @@
 
   &__header-eyebrow {
     font-family: $font-primary;
-    font-size: 0.68rem;
+    font-size: $font-eyebrow;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--accent);

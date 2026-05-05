@@ -14,8 +14,8 @@
 .contact {
   min-height: auto;
   background: var(--bg);
-  position: relative;
-   overflow: visible;
+  @include relative;
+  overflow: visible;
   @include flex-col;
 
   // Grain
@@ -31,7 +31,7 @@
 
   // Sun
   &__sun-wrap {
-    position: absolute;
+    @include absolute;
     left: -80px;
     bottom: 0;
     width: 250px;
@@ -40,6 +40,9 @@
     opacity: 0.5;
     mix-blend-mode: screen;
     transition: opacity 0.6s ease;
+    @include mobile {
+      display: none;
+    }
 
     &--hidden { opacity: 0; }
     img { width: 100%; height: auto; display: block; }
@@ -84,7 +87,7 @@
 
   &__header-eyebrow {
     font-family: $font-primary;
-    font-size: 0.85rem;
+    font-size: $font-eyebrow;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--accent);

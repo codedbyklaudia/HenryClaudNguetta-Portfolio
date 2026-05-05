@@ -6,22 +6,27 @@
   align-items: center;
   justify-content: center;
 }
-
+@mixin align-center {
+  display: flex;
+    align-items: center;
+}
 @mixin flex-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 @mixin flex-col {
   display: flex;
   flex-direction: column;
 }
-
+@mixin none {
+  outline: none;
+  border: none;
+  background: none;
+}
 @mixin absolute {
   position: absolute;
 }
-
 @mixin relative {
   position: relative;
 }
@@ -91,11 +96,6 @@
 @mixin hover-lift {
   transition: transform $transition-base;
   &:hover { transform: translateY(-2px); }
-}
-@mixin none {
-  outline: none;
-  border: none;
-  background: none;
 }
 @mixin subtle-underline {
   position: relative;

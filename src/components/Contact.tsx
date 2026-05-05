@@ -81,15 +81,6 @@ export default function Contact() {
               <span className="contact__header-social-line" />
               Vimeo
             </a>
-            <a
-              href="https://www.imdb.com/name/henryclaud"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contact__header-social"
-            >
-              <span className="contact__header-social-line" />
-              IMDB
-            </a>
           </div>
         </div>
       </div>

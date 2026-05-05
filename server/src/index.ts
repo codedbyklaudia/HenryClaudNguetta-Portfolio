@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import contactRoute from './contactRoute'
+import contactRoute from './contactRoute.js'
 
 dotenv.config()
 
