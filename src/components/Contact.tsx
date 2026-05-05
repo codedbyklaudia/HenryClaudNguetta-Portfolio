@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import '../styles/_contact.scss'
 import sunImg from '../images/sun.png'
 import { Mail, Phone, MapPin } from 'lucide-react'

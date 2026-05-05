@@ -6,10 +6,6 @@ import showreelVideo from '../../images/ShowreelHCN.mp4'
 export default function Showreel() {
   const playerRef = useRef<HTMLDivElement>(null)
 
-  const scrollToPlayer = () => {
-    playerRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <div className="showreel">
 

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './components/HomePage'
 import Contact from './components/Contact'
@@ -9,9 +9,6 @@ import Footer from './components/Footer'
 import './global.scss'
 
 function Layout() {
-  const location = useLocation()
-  const isHome = location.pathname === '/'
-
   return (
     <>
       <Navbar />
