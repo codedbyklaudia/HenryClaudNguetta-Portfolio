@@ -27,7 +27,7 @@ app.get('/test', (req, res) => {
 })
 import fs from 'fs'
 
-app.get('/test-files', (req, res) => {
-  const files = fs.readdirSync('./dist')
-  res.json({ files })
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`)
+  next()
 })
