@@ -172,7 +172,7 @@ export default function Contact() {
 
                 {error && (
                   <p className="contact__error">
-                    Something went wrong — please email directly at work@henryclaudnguetta.co.uk
+                    Something went wrong - please email directly at work@henryclaudnguetta.co.uk
                   </p>
                 )}
 
