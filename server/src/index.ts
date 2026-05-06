@@ -25,3 +25,9 @@ app.get('/test', (req, res) => {
     nodeEnv: process.env.NODE_ENV
   })
 })
+import fs from 'fs'
+
+app.get('/test-files', (req, res) => {
+  const files = fs.readdirSync('./dist')
+  res.json({ files })
+})
