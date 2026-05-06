@@ -2,9 +2,13 @@ import { Router, type Request, type Response } from 'express'
 import { Resend } from 'resend'
 
 const router = Router()
-const resend = new Resend(process.env.RESEND_API_KEY!)
 
 router.post('/', async (req: Request, res: Response) => {
+  console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY)
+  console.log('CLIENT_URL:', process.env.CLIENT_URL)
+
+  const resend = new Resend(process.env.RESEND_API_KEY!)
+
   const { firstName, lastName, email, message } = req.body as {
     firstName?: string
     lastName?: string
@@ -20,7 +24,6 @@ router.post('/', async (req: Request, res: Response) => {
   const fullName = `${firstName ?? ''} ${lastName ?? ''}`.trim() || 'Someone'
 
   try {
-    // Email to Henry
     await resend.emails.send({
       from: 'Portfolio Contact <no-reply@henryclaudnguetta.co.uk>',
       to: 'work@henryclaudnguetta.co.uk',
@@ -36,7 +39,6 @@ router.post('/', async (req: Request, res: Response) => {
               Received via henryclaudnguetta.co.uk
             </p>
           </div>
-
           <div style="padding: 40px;">
             <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 14px;">
               <tr>
@@ -50,15 +52,12 @@ router.post('/', async (req: Request, res: Response) => {
                 </td>
               </tr>
             </table>
-
             <hr style="border: none; border-top: 1px solid #e0d9d0; margin: 24px 0;" />
-
             <p style="font-family: sans-serif; font-size: 13px; color: #888; margin: 0 0 12px;">Message</p>
             <p style="font-size: 15px; line-height: 1.7; color: #1a1a1a; margin: 0;">
               ${message.replace(/\n/g, '<br/>')}
             </p>
           </div>
-
           <div style="padding: 24px 40px; background: #f2ede6; border-top: 1px solid #e0d9d0; font-family: sans-serif; font-size: 12px; color: #aaa;">
             Reply directly to this email to respond to ${fullName}.
           </div>
@@ -66,7 +65,6 @@ router.post('/', async (req: Request, res: Response) => {
       `
     })
 
-    // Confirmation email to sender
     await resend.emails.send({
       from: "Henry Claud N'Guetta <no-reply@henryclaudnguetta.co.uk>",
       to: email,
@@ -81,7 +79,6 @@ router.post('/', async (req: Request, res: Response) => {
               VFX Artist & Filmmaker
             </p>
           </div>
-
           <div style="padding: 40px;">
             <p style="font-size: 15px; line-height: 1.7; color: #1a1a1a; margin: 0 0 20px;">
               Hi ${firstName ?? 'there'},
@@ -96,7 +93,6 @@ router.post('/', async (req: Request, res: Response) => {
               <a href="https://www.linkedin.com/in/henry-claud-n-guetta-b8a910222/" style="color: #ABA021; text-decoration: none;">LinkedIn</a>.
             </p>
           </div>
-
           <div style="padding: 24px 40px; background: #f2ede6; border-top: 1px solid #e0d9d0; font-family: sans-serif; font-size: 12px; color: #aaa;">
             © Henry Claud N'Guetta · London, United Kingdom
           </div>
