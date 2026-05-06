@@ -17,3 +17,11 @@ app.use('/api', contactRoute)
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+app.get('/test', (req, res) => {
+  res.json({
+    hasResendKey: !!process.env.RESEND_API_KEY,
+    clientUrl: process.env.CLIENT_URL,
+    nodeEnv: process.env.NODE_ENV
+  })
+})
