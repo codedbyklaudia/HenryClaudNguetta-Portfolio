@@ -3,6 +3,7 @@ dotenv.config()
 
 import express from 'express'
 import cors from 'cors'
+import fs from 'fs'
 import contactRoute from './contactRoute.js'
 
 const app = express()
@@ -14,8 +15,9 @@ app.use(cors({
 app.use(express.json())
 app.use('/api', contactRoute)
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`)
+  next()
 })
 
 app.get('/test', (req, res) => {
@@ -25,9 +27,7 @@ app.get('/test', (req, res) => {
     nodeEnv: process.env.NODE_ENV
   })
 })
-import fs from 'fs'
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`)
-  next()
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })
