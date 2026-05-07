@@ -13,7 +13,12 @@ app.use(cors({
   origin: process.env.CLIENT_URL || 'https://henryclaudnguetta.co.uk'
 }))
 app.use(express.json())
-app.use('/api', contactRoute)
+
+// TEMP - replace the router with a direct route
+app.post('/api/contact', async (req, res) => {
+  console.log('Direct route hit!')
+  res.json({ ok: true })
+})
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`)
